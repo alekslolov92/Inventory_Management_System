@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Sales History - InvenTrack{% endblock %}
+{% block page_title %}Sales History{% endblock %}
+
+{% block content %}
+<div class="card mb-1">
+    <div class="stat-card inline-stat">
+        <div class="stat-icon green"><i class="fas fa-indian-rupee-sign"></i></div>
+        <div class="stat-info">
+            <span class="stat-value">₹{{ "%.2f"|format(total_revenue) }}</span>
+            <span class="stat-label">Total Revenue</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-receipt"></i> All Transactions</h2>
+        <a href="{{ url_for('record_sale') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> New Sale
+        </a>
+    </div>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Qty Sold</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><strong>{{ sale.product_name }}</strong></td>
+                    <td>{{ sale.quantity_sold }}</td>
+                    <td>₹{{ "%.2f"|format(sale.sale_price) }}</td>
+                    <td><strong>₹{{ "%.2f"|format(sale.total_amount) }}</strong></td>
+                    <td>{{ sale.sale_date }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="empty-state">No sales recorded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

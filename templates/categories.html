@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Categories - InvenTrack{% endblock %}
+{% block page_title %}Categories{% endblock %}
+
+{% block content %}
+<div class="two-col-layout">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-tags"></i> Add Category</h2>
+        </div>
+        <form method="POST" action="{{ url_for('categories') }}">
+            <div class="form-group">
+                <label for="name">Category Name <span class="required">*</span></label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Electronics" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Category
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-list"></i> All Categories</h2>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Products</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in categories %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ cat.name }}</td>
+                        <td>{{ cat.product_count }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('delete_category', category_id=cat.id) }}" onsubmit="return confirm('Delete this category?')">
+                                <button type="submit" class="btn-icon btn-delete" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-state">No categories yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

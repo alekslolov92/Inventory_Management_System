@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Add Product - InvenTrack{% endblock %}
+{% block page_title %}Add New Product{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-plus-circle"></i> Product Details</h2>
+        </div>
+        <form method="POST" action="{{ url_for('add_product') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Product Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Wireless Mouse" required>
+                </div>
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select id="category_id" name="category_id" class="form-control">
+                        <option value="">— Select Category —</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹) <span class="required">*</span></label>
+                    <input type="number" id="price" name="price" class="form-control" placeholder="0.00" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock_quantity">Stock Quantity <span class="required">*</span></label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" class="form-control" placeholder="0" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="low_stock_threshold">Low Stock Alert Threshold</label>
+                    <input type="number" id="low_stock_threshold" name="low_stock_threshold" class="form-control" value="5" min="0">
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Save Product
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

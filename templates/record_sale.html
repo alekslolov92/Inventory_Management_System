@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Record Sale - InvenTrack{% endblock %}
+{% block page_title %}Record a Sale{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-cart-shopping"></i> Sale Details</h2>
+        </div>
+        <form method="POST" action="{{ url_for('record_sale') }}">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="product_id">Select Product <span class="required">*</span></label>
+                    <select id="product_id" name="product_id" class="form-control" required onchange="updatePrice(this)">
+                        <option value="">— Choose a product —</option>
+                        {% for product in products %}
+                        <option value="{{ product.id }}" data-price="{{ product.price }}" data-stock="{{ product.stock_quantity }}">
+                            {{ product.name }} (Stock: {{ product.stock_quantity }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity_sold">Quantity <span class="required">*</span></label>
+                    <input type="number" id="quantity_sold" name="quantity_sold" class="form-control" placeholder="1" min="1" required oninput="updateTotal()">
+                </div>
+                <div class="form-group">
+                    <label>Unit Price</label>
+                    <input type="text" id="unit_price_display" class="form-control" readonly placeholder="Select a product">
+                </div>
+                <div class="form-group">
+                    <label>Total Amount</label>
+                    <input type="text" id="total_display" class="form-control" readonly placeholder="—">
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Confirm Sale
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

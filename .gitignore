@@ -1,0 +1,23 @@
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# Python bytecode (compiled files)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database (Optional)
+# If you want to upload a clean database for your teacher, 
+# DO NOT include inventory.db here. 
+# However, professionals usually ignore it:
+# inventory.db
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
